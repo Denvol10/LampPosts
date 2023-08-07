@@ -36,7 +36,7 @@ namespace LampPosts.ViewModels
         #endregion
 
         #region Id dwg файла
-        private string _dwgFileUniqueId = (string)Properties.Settings.Default["DwgFileUniqueId"];
+        private string _dwgFileUniqueId;
 
         public string DwgFileUniqueId
         {
@@ -84,6 +84,7 @@ namespace LampPosts.ViewModels
         private void SaveSettings()
         {
             Properties.Settings.Default["DwgFileUniqueId"] = DwgFileUniqueId;
+            Properties.Settings.Default.Save();
         }
 
 
@@ -92,7 +93,17 @@ namespace LampPosts.ViewModels
         {
             RevitModel = revitModel;
 
-            //TODO Добавить инициализацию значения файла dwg из settings
+            #region Инициализация значения dwg файла
+            if (!(Properties.Settings.Default["DwgFileUniqueId"] is null))
+            {
+                string dwgFileUniqueIdInSettings = Properties.Settings.Default["DwgFileUniqueId"].ToString();
+                if (RevitModel.IsDwgFileExistInModel(dwgFileUniqueIdInSettings) && !string.IsNullOrEmpty(dwgFileUniqueIdInSettings))
+                {
+                    DwgFileUniqueId = dwgFileUniqueIdInSettings;
+                    RevitModel.GetDWGFileBySettings(dwgFileUniqueIdInSettings);
+                }
+            }
+            #endregion
 
             #region Команды
             GetDWGFileCommand = new LambdaCommand(OnGetDWGFileCommandExecuted, CanGetDWGFileCommandExecute);

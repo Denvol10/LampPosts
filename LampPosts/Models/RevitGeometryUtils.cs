@@ -20,5 +20,24 @@ namespace LampPosts.Models
             dwgFileUniqueId = dwgFile.UniqueId;
             return dwgFile;
         }
+
+        // Проверка на то существует ли файл dwg в модели
+        public static bool IsDwgFileExistInModel(Document doc, string dwgFileUniqueId)
+        {
+            if(dwgFileUniqueId is null || doc.GetElement(dwgFileUniqueId) is null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        // Получение dwg файла из settings
+        public static ImportInstance GetDWGFileBySettings(Document doc, string dwgFileUniqueId)
+        {
+            ImportInstance dwgFile = doc.GetElement(dwgFileUniqueId) as ImportInstance;
+
+            return dwgFile;
+        }
     }
 }

@@ -11,6 +11,7 @@ using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.DB.Architecture;
 using System.Collections.ObjectModel;
 using LampPosts.Models;
+using LampPosts.Infrastructure;
 
 namespace LampPosts
 {
@@ -43,6 +44,16 @@ namespace LampPosts
         public void GetDWGFileBySelection()
         {
             DwgFile = RevitGeometryUtils.GetDWGFileBySelection(Uiapp, out _dwgFileUniqueId);
+        }
+
+        public bool IsDwgFileExistInModel(string dwgFileUniqueId)
+        {
+            return RevitGeometryUtils.IsDwgFileExistInModel(Doc,dwgFileUniqueId);
+        }
+
+        public void GetDWGFileBySettings(string dwgFileUniqueId)
+        {
+            DwgFile = RevitGeometryUtils.GetDWGFileBySettings(Doc, dwgFileUniqueId);
         }
 
         #endregion
