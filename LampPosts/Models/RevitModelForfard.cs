@@ -10,6 +10,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.DB.Architecture;
 using System.Collections.ObjectModel;
+using LampPosts.Models;
 
 namespace LampPosts
 {
@@ -27,5 +28,23 @@ namespace LampPosts
             Uidoc = uiapp.ActiveUIDocument;
             Doc = uiapp.ActiveUIDocument.Document;
         }
+
+        #region Выбор dwg файла
+        public ImportInstance DwgFile { get; set; }
+
+        private string _dwgFileUniqueId;
+
+        public string DwgFileUniqueId
+        {
+            get => _dwgFileUniqueId;
+            set => _dwgFileUniqueId = value;
+        }
+
+        public void GetDWGFileBySelection()
+        {
+            DwgFile = RevitGeometryUtils.GetDWGFileBySelection(Uiapp, out _dwgFileUniqueId);
+        }
+
+        #endregion
     }
 }

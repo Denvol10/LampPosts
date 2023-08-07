@@ -26,7 +26,6 @@ namespace LampPosts.ViewModels
         }
 
         #region Заголовок
-
         private string _title = "Фонари";
 
         public string Title
@@ -34,23 +33,36 @@ namespace LampPosts.ViewModels
             get => _title;
             set => Set(ref _title, value);
         }
-
         #endregion
 
-        #region Список комнат
+        #region Id dwg файла
+        private string _dwgFileUniqueId;
 
-        private ObservableCollection<string> _rooms;
-
-        public ObservableCollection<string> Rooms
+        public string DwgFileUniqueId
         {
-            get => _rooms;
-            set => Set(ref _rooms, value);
+            get => _dwgFileUniqueId;
+            set => Set(ref _dwgFileUniqueId, value);
         }
-
         #endregion
 
         #region Команды
 
+        #region Получение DWG файла
+        public ICommand GetDWGFileCommand { get; }
+
+        private void OnGetDWGFileCommandExecuted(object parameter)
+        {
+            RevitCommand.mainView.Hide();
+            RevitModel.GetDWGFileBySelection();
+            DwgFileUniqueId = RevitModel.DwgFileUniqueId;
+            RevitCommand.mainView.ShowDialog();
+        }
+
+        private bool CanGetDWGFileCommandExecute(object parameter)
+        {
+            return true;
+        }
+        #endregion
 
         #endregion
 
@@ -61,7 +73,7 @@ namespace LampPosts.ViewModels
             RevitModel = revitModel;
 
             #region Команды
-
+            GetDWGFileCommand = new LambdaCommand(OnGetDWGFileCommandExecuted, CanGetDWGFileCommandExecute);
             #endregion
         }
 

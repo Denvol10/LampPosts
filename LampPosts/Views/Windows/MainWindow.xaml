@@ -73,10 +73,13 @@
             <UniformGrid Columns="2">
                 <UniformGrid Rows="2">
                     <TextBlock Text="Файл dwg"
-                               Style="{StaticResource TextAboveButton}" Height="16"/>
-                    <Button Style="{StaticResource SelectButton}"/>
+                               Style="{StaticResource TextAboveButton}"
+                               Height="16" />
+                    <Button Style="{StaticResource SelectButton}"
+                            Command="{Binding GetDWGFileCommand}" />
                 </UniformGrid>
-                <TextBox Style="{StaticResource SelectedItemsBox}" />
+                <TextBox Style="{StaticResource SelectedItemsBox}"
+                         Text="{Binding DwgFileUniqueId}" />
             </UniformGrid>
         </GroupBox>
         <GroupBox Header="Фонарь"
@@ -90,7 +93,8 @@
                 </UniformGrid>
             </UniformGrid>
         </GroupBox>
-        <GroupBox Header="Создание" Style="{StaticResource BorderGroupStyle}">
+        <GroupBox Header="Создание"
+                  Style="{StaticResource BorderGroupStyle}">
             <UniformGrid Columns="2"
                          Margin="0,12,0,5">
                 <Button Content="Создать"
