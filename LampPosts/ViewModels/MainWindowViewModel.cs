@@ -27,7 +27,7 @@ namespace LampPosts.ViewModels
 
         #region Заголовок
 
-        private string _title = "Комнаты";
+        private string _title = "Фонари";
 
         public string Title
         {
@@ -51,34 +51,22 @@ namespace LampPosts.ViewModels
 
         #region Команды
 
-        #region Команда получение всех комнат
-
-        public ICommand GetRoomsCommand { get; }
-
-        private void OnGetRoomsCommandExecuted(object parameter)
-        {
-            Rooms = new ObservableCollection<string>(RevitModel.GetAllRooms());
-        }
-
-        private bool CanGetRoomsCommandExecute(object parameter)
-        {
-            return true;
-        }
-
-        #endregion
 
         #endregion
 
 
         #region Конструктор класса MainWindowViewModel
-        public MainWindowViewModel()
+        public MainWindowViewModel(RevitModelForfard revitModel)
         {
-            #region
+            RevitModel = revitModel;
 
-            GetRoomsCommand = new LambdaCommand(OnGetRoomsCommandExecuted, CanGetRoomsCommandExecute);
+            #region Команды
 
             #endregion
         }
+
+        public MainWindowViewModel()
+        { }
         #endregion
     }
 }
