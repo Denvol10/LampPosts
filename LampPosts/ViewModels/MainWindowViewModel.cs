@@ -36,7 +36,7 @@ namespace LampPosts.ViewModels
         #endregion
 
         #region Id dwg файла
-        private string _dwgFileUniqueId;
+        private string _dwgFileUniqueId = (string)Properties.Settings.Default["DwgFileUniqueId"];
 
         public string DwgFileUniqueId
         {
@@ -64,7 +64,27 @@ namespace LampPosts.ViewModels
         }
         #endregion
 
+        #region Закрыть окно
+        public ICommand CloseWindow { get; }
+
+        private void OnCloseWindowCommandExecuted(object parameter)
+        {
+            SaveSettings();
+            RevitCommand.mainView.Close();
+        }
+
+        private bool CanCloseWindowCommandExecute(object parameter)
+        {
+            return true;
+        }
         #endregion
+
+        #endregion
+
+        private void SaveSettings()
+        {
+            Properties.Settings.Default["DwgFileUniqueId"] = DwgFileUniqueId;
+        }
 
 
         #region Конструктор класса MainWindowViewModel
@@ -72,8 +92,11 @@ namespace LampPosts.ViewModels
         {
             RevitModel = revitModel;
 
+            //TODO Добавить инициализацию значения файла dwg из settings
+
             #region Команды
             GetDWGFileCommand = new LambdaCommand(OnGetDWGFileCommandExecuted, CanGetDWGFileCommandExecute);
+            CloseWindow = new LambdaCommand(OnCloseWindowCommandExecuted, CanCloseWindowCommandExecute);
             #endregion
         }
 
