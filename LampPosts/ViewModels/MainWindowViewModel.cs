@@ -12,6 +12,7 @@ using Autodesk.Revit.DB.Architecture;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using LampPosts.Infrastructure;
+using LampPosts.Models;
 
 namespace LampPosts.ViewModels
 {
@@ -42,6 +43,24 @@ namespace LampPosts.ViewModels
         {
             get => _dwgFileUniqueId;
             set => Set(ref _dwgFileUniqueId, value);
+        }
+        #endregion
+
+        #region Список семейств и их типоразмеров
+        private ObservableCollection<FamilySymbolSelector> _genericModelFamilySymbols = new ObservableCollection<FamilySymbolSelector>();
+        public ObservableCollection<FamilySymbolSelector> GenericModelFamilySymbols
+        {
+            get => _genericModelFamilySymbols;
+            set => Set(ref _genericModelFamilySymbols, value);
+        }
+        #endregion
+
+        #region Выбранный типоразмер семейства
+        private FamilySymbolSelector _familySymbolName;
+        public FamilySymbolSelector FamilySymbolName
+        {
+            get => _familySymbolName;
+            set => Set(ref _familySymbolName, value);
         }
         #endregion
 
@@ -92,6 +111,8 @@ namespace LampPosts.ViewModels
         public MainWindowViewModel(RevitModelForfard revitModel)
         {
             RevitModel = revitModel;
+
+            GenericModelFamilySymbols = RevitModel.GetFamilySymbolNames();
 
             #region Инициализация значения dwg файла
             if (!(Properties.Settings.Default["DwgFileUniqueId"] is null))

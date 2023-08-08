@@ -55,7 +55,28 @@ namespace LampPosts
         {
             DwgFile = RevitGeometryUtils.GetDWGFileBySettings(Doc, dwgFileUniqueId);
         }
+        #endregion
 
+        #region Список названий типоразмеров семейств
+        public ObservableCollection<FamilySymbolSelector> GetFamilySymbolNames()
+        {
+            var familySymbolNames = new ObservableCollection<FamilySymbolSelector>();
+            var allFamilies = new FilteredElementCollector(Doc).OfClass(typeof(Family)).OfType<Family>();
+            var genericModelFamilies = allFamilies.Where(f => f.FamilyCategory.Id.IntegerValue == (int)BuiltInCategory.OST_GenericModel);
+            if (genericModelFamilies.Count() == 0)
+                return familySymbolNames;
+
+            foreach (var family in genericModelFamilies)
+            {
+                foreach (var symbolId in family.GetFamilySymbolIds())
+                {
+                    var familySymbol = Doc.GetElement(symbolId);
+                    familySymbolNames.Add(new FamilySymbolSelector(family.Name, familySymbol.Name));
+                }
+            }
+
+            return familySymbolNames;
+        }
         #endregion
     }
 }
