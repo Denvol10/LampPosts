@@ -79,7 +79,7 @@
                             Command="{Binding GetDWGFileCommand}" />
                 </UniformGrid>
                 <TextBox Style="{StaticResource SelectedItemsBox}"
-                         Text="{Binding DwgFileUniqueId}" />
+                         Text="{Binding DwgFileName}" />
             </UniformGrid>
         </GroupBox>
         <GroupBox Header="Фонарь"

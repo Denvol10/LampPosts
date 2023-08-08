@@ -46,6 +46,16 @@ namespace LampPosts.ViewModels
         }
         #endregion
 
+        #region Имя dwg файла
+        private string _dwgFileName;
+        
+        public string DwgFileName
+        {
+            get => _dwgFileName;
+            set => Set(ref _dwgFileName, value);
+        }
+        #endregion
+
         #region Список семейств и их типоразмеров
         private ObservableCollection<FamilySymbolSelector> _genericModelFamilySymbols = new ObservableCollection<FamilySymbolSelector>();
         public ObservableCollection<FamilySymbolSelector> GenericModelFamilySymbols
@@ -83,6 +93,7 @@ namespace LampPosts.ViewModels
             RevitCommand.mainView.Hide();
             RevitModel.GetDWGFileBySelection();
             DwgFileUniqueId = RevitModel.DwgFileUniqueId;
+            DwgFileName = RevitModel.GetDwgFileName();
             RevitCommand.mainView.ShowDialog();
         }
 
@@ -132,6 +143,7 @@ namespace LampPosts.ViewModels
                 {
                     DwgFileUniqueId = dwgFileUniqueIdInSettings;
                     RevitModel.GetDWGFileBySettings(dwgFileUniqueIdInSettings);
+                    DwgFileName = RevitModel.GetDwgFileName();
                 }
             }
             #endregion

@@ -40,8 +40,6 @@ namespace LampPosts
             set => _dwgFileUniqueId = value;
         }
 
-
-
         public void GetDWGFileBySelection()
         {
             DwgFile = RevitGeometryUtils.GetDWGFileBySelection(Uiapp, out _dwgFileUniqueId);
@@ -55,6 +53,12 @@ namespace LampPosts
         public void GetDWGFileBySettings(string dwgFileUniqueId)
         {
             DwgFile = RevitGeometryUtils.GetDWGFileBySettings(Doc, dwgFileUniqueId);
+        }
+
+        public string GetDwgFileName()
+        {
+            string name = DwgFile.Category.Name;
+            return name;
         }
         #endregion
 
