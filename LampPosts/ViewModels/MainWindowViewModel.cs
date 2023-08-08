@@ -64,6 +64,15 @@ namespace LampPosts.ViewModels
         }
         #endregion
 
+        #region Индекс вфбранного типоразмера семейства
+        private int _familySymbolIndex = (int)Properties.Settings.Default["FamilySymbolIndex"];
+        public int FamilySymbolIndex
+        {
+            get => _familySymbolIndex;
+            set => Set(ref _familySymbolIndex, value);
+        }
+        #endregion
+
         #region Команды
 
         #region Получение DWG файла
@@ -103,6 +112,7 @@ namespace LampPosts.ViewModels
         private void SaveSettings()
         {
             Properties.Settings.Default["DwgFileUniqueId"] = DwgFileUniqueId;
+            Properties.Settings.Default["FamilySymbolIndex"] = GenericModelFamilySymbols.IndexOf(FamilySymbolName);
             Properties.Settings.Default.Save();
         }
 
@@ -123,6 +133,13 @@ namespace LampPosts.ViewModels
                     DwgFileUniqueId = dwgFileUniqueIdInSettings;
                     RevitModel.GetDWGFileBySettings(dwgFileUniqueIdInSettings);
                 }
+            }
+            #endregion
+
+            #region Инициализация значения типоразмера семейства
+            if(FamilySymbolIndex >= 0 && FamilySymbolIndex <= GenericModelFamilySymbols.Count - 1)
+            {
+                FamilySymbolName = GenericModelFamilySymbols.ElementAt(FamilySymbolIndex);
             }
             #endregion
 

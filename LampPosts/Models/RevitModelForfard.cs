@@ -34,12 +34,13 @@ namespace LampPosts
         public ImportInstance DwgFile { get; set; }
 
         private string _dwgFileUniqueId;
-
         public string DwgFileUniqueId
         {
             get => _dwgFileUniqueId;
             set => _dwgFileUniqueId = value;
         }
+
+
 
         public void GetDWGFileBySelection()
         {

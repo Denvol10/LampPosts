@@ -91,7 +91,7 @@
                     <ComboBox Width="150"
                               Margin="0,2,0,0"
                               ItemsSource="{Binding GenericModelFamilySymbols}"
-                              SelectedItem="{Binding FamilySymbolName}"/>
+                              SelectedItem="{Binding FamilySymbolName}" />
                 </UniformGrid>
             </UniformGrid>
         </GroupBox>
