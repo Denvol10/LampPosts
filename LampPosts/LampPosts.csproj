@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
@@ -60,6 +63,8 @@
     <Compile Include="Infrastructure\RevitCommand.cs" />
     <Compile Include="Models\FamilySymbolSelector.cs" />
     <Compile Include="Models\ImportInstanceFilter.cs" />
+    <Compile Include="Models\LampPostLocation.cs" />
+    <Compile Include="Models\LampPostLocationIEqualityComparer.cs" />
     <Compile Include="Models\RevitGeometryUtils.cs" />
     <Compile Include="Models\RevitModelForfard.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -82,10 +87,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="testResult.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

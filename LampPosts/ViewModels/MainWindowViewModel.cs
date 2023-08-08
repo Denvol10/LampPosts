@@ -103,6 +103,22 @@ namespace LampPosts.ViewModels
         }
         #endregion
 
+        #region Создание экземпляров семейств
+        public ICommand CreatePostsCommand { get; }
+
+        private void OnCreatePostsCommandExecuted(object parameter)
+        {
+            RevitModel.CreatePostFamilyInstances(FamilySymbolName);
+            SaveSettings();
+            RevitCommand.mainView.Close();
+        }
+
+        private bool CanCreatePostsCommandExecute(object parameter)
+        {
+            return true;
+        }
+        #endregion
+
         #region Закрыть окно
         public ICommand CloseWindow { get; }
 
@@ -157,6 +173,7 @@ namespace LampPosts.ViewModels
 
             #region Команды
             GetDWGFileCommand = new LambdaCommand(OnGetDWGFileCommandExecuted, CanGetDWGFileCommandExecute);
+            CreatePostsCommand = new LambdaCommand(OnCreatePostsCommandExecuted, CanCreatePostsCommandExecute);
             CloseWindow = new LambdaCommand(OnCloseWindowCommandExecuted, CanCloseWindowCommandExecute);
             #endregion
         }

@@ -83,5 +83,32 @@ namespace LampPosts
             return familySymbolNames;
         }
         #endregion
+
+        #region Создание экземпляров семейств
+        public void CreatePostFamilyInstances(FamilySymbolSelector postFamilySymbol)
+        {
+            FamilySymbol postFSymbol = RevitGeometryUtils.GetFamilySymbolByName(Doc, postFamilySymbol);
+            var locations = RevitGeometryUtils.GetLampPostLocation(DwgFile).Distinct(new LampPostLocationIEqualityComparer());
+
+            using (Transaction trans = new Transaction(Doc, "Create LampPosts"))
+            {
+                trans.Start();
+                if(!postFSymbol.IsActive)
+                {
+                    postFSymbol.Activate();
+                }
+
+                foreach(var location in locations)
+                {
+                    FamilyInstance postFamilyInstance = Doc.Create.NewFamilyInstance(location.Point,
+                                                                                     postFSymbol,
+                                                                                     Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+                    location.RotatePost();
+                    postFamilyInstance.Location.Rotate(Line.CreateUnbound(location.Point, XYZ.BasisZ), location.RotationAngle);
+                }
+                trans.Commit();
+            }
+        }
+        #endregion
     }
 }
